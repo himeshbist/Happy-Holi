@@ -15,7 +15,7 @@
   height: 100%;
   overflow: hidden;
   z-index: -1;
-  background: rgba(0, 0, 0, 0.363);
+  background: black;
 }
 
 #video-container video {
@@ -43,7 +43,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.705);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 /* Main Content */
@@ -67,13 +67,11 @@
 .subtitle {
   font-size: 1.5rem;
   margin-bottom: 20px;
-  align-items: center;
-  justify-content: center;
 }
 
 /* Open Letter Button Styling */
 #wishButton {
-  background: linear-gradient(135deg, #e57efa, #e9c4fa);
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
   padding: 14px 28px;
   border: none;
   font-size: 20px;
@@ -177,7 +175,7 @@
 
 .gallery-button {
   margin-top: 20px;
-  background: rgba(184, 80, 85, 0.8);
+  background: rgba(187, 82, 82, 0.8);
   padding: 12px 24px;
   border: none;
   font-size: 18px;
@@ -207,9 +205,31 @@
   display: inline;
 }
 
-#letterCard {
-  font-family: 'Noto Serif Devanagari', serif;
+/* Glowing "By Himesh" */
+.bottom-glow {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: Arial, sans-serif;
+  text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+  animation: glow 1.5s infinite alternate;
 }
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px #991c8f, 0 0 10px #991c8f, 0 0 20px #991c8f, 0 0 40px #991c8f;
+  }
+  100% {
+    text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 50px #ff00ff;
+  }
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
