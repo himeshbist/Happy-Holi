@@ -62,8 +62,8 @@ Big thanks to all **open-source** developers and designers who contribute to mak
 
 ## 📢 Connect with Me
 
-📧 Email: [your.email@example.com](mailto:bistdipesh75@gmail.com)  
-📷 Instagram: [@yourhandle]((https://www.instagram.com/lieutenant_colonel7/))  
+📧 Email: [bistdipesh75@gmail.com](mailto:bistdipesh75@gmail.com)  
+📷 Instagram: [@lieutenant_colonel7]((https://www.instagram.com/lieutenant_colonel7/))  
 
 Happy Coding & Happy Holi! 🎊✨
 
