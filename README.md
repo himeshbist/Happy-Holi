@@ -44,7 +44,7 @@ Welcome to **Happy Holi**, a vibrant and interactive web experience designed to 
 
 | Homepage | Opened Greeting |
 |----------|---------------|
-| ![Homepage](https://via.placeholder.com/400) | ![Greeting Modal](Letter.jpg) |
+| ![Homepage](main screen.jpg) | ![Greeting Modal](Letter.jpg) |
 
 ---
 
