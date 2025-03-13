@@ -5,18 +5,33 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeModalBtn = document.getElementById("closeModalBtn");
     const audio = document.getElementById("backgroundMusic");
 
-    // Open Letter Modal
-    openLetterBtn.addEventListener("click", openModal);
+    let wasPlaying = false; // Track if music was playing before tab switch
 
-    // Close Letter Modal
+    if (!modal || !letterCard || !openLetterBtn || !closeModalBtn || !audio) {
+        console.error("One or more required elements are missing.");
+        return;
+    }
+
+    openLetterBtn.addEventListener("click", openModal);
     closeModalBtn.addEventListener("click", closeModal);
+
+    // ✅ Stop & Resume music when user switches tab or minimizes screen
+    document.addEventListener("visibilitychange", function () {
+        if (document.hidden) {
+            wasPlaying = !audio.paused; // Store play state
+            audio.pause();
+        } else if (wasPlaying) {
+            audio.play(); // Resume if it was playing before
+        }
+    });
 
     function openModal() {
         modal.style.display = "flex";
-        letterCard.innerHTML = ""; // Reset previous content
-        audio.play(); // Start music again
+        letterCard.innerHTML = "";
+        audio.currentTime = 0;
+        audio.play();
+        document.querySelector(".modal-content").style.display = "block";
 
-        // Text display hone ke baad WhatsApp button add hoga
         setTimeout(() => {
             typeWriter(letterCard, getMessage(), 0, addWhatsAppButton);
         }, 100);
@@ -27,11 +42,18 @@ document.addEventListener("DOMContentLoaded", function () {
             duration: 0.3,
             ease: "power3.out",
         });
+
+        // ✅ Stop music when user clicks outside modal
+        modal.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
     }
 
     function closeModal() {
-        audio.pause(); // Stop music when modal is closed
-        audio.currentTime = 0; // Reset music to start
+        audio.pause();
+        audio.currentTime = 0;
 
         gsap.to(".modal-content", {
             scale: 0.8,
@@ -40,46 +62,46 @@ document.addEventListener("DOMContentLoaded", function () {
             ease: "power3.in",
             onComplete: () => {
                 modal.style.display = "none";
-                letterCard.innerHTML = ""; // Reset text properly
+                letterCard.innerHTML = "";
+                document.querySelector(".whatsapp-link")?.remove();
             }
         });
     }
 
     function typeWriter(element, text, index, callback) {
-        if (index < text.length) {
-            if (text.charAt(index) === "<") {
-                let endIndex = text.indexOf(">", index);
-                element.innerHTML += text.substring(index, endIndex + 1);
-                index = endIndex + 1;
-            } else {
-                const span = document.createElement("span");
-                span.textContent = text.charAt(index);
-                element.appendChild(span);
-                index++;
+        element.innerHTML = "";
+        function writeChar(i) {
+            if (i < text.length) {
+                if (text.charAt(i) === "<") {
+                    let endIndex = text.indexOf(">", i);
+                    element.innerHTML += text.substring(i, endIndex + 1);
+                    i = endIndex + 1;
+                } else {
+                    const span = document.createElement("span");
+                    span.textContent = text.charAt(i);
+                    element.appendChild(span);
+                    i++;
+                }
+                setTimeout(() => writeChar(i), 50);
+            } else if (callback) {
+                setTimeout(callback, 500);
             }
-
-            setTimeout(() => typeWriter(element, text, index, callback), 50);
-        } else if (callback) {
-            setTimeout(callback, 500);
         }
+        writeChar(0);
     }
 
     function addWhatsAppButton() {
-        // Ensure button is not duplicated
-        if (!document.querySelector(".whatsapp-button")) {
-            const whatsappButton = document.createElement("button");
-            whatsappButton.textContent = "Send WhatsApp Message";
-            whatsappButton.className = "gallery-button whatsapp-button"; // Reusing the style
-
-            // WhatsApp link with a custom message
-            const phoneNumber = "YOUR_PHONE_NUMBER"; // <-- Apna number dalna
-            const message = encodeURIComponent("");
-            whatsappButton.onclick = () => window.open(`https://wa.me/${+919336784076}?text=${message}`, "_blank");
+        if (!document.querySelector(".whatsapp-link")) {
+            const whatsappLink = document.createElement("a");
+            whatsappLink.href = "https://wa.me/919455331645";
+            whatsappLink.target = "_blank";
+            whatsappLink.className = "whatsapp-link";
+            whatsappLink.innerHTML = "Wish Me";
 
             letterCard.appendChild(document.createElement("br"));
-            letterCard.appendChild(whatsappButton);
+            letterCard.appendChild(whatsappLink);
 
-            gsap.from(whatsappButton, {
+            gsap.from(whatsappLink, {
                 y: 50,
                 opacity: 0,
                 duration: 0.5,
@@ -89,12 +111,76 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function getMessage() {
-        return `गुलाल उड़ाए हवा में, बहार आई है,<br>
+        return `<span class="hindi-text">🌸 गुलाल उड़ाए हवा में, बहार आई है,<br>
 खुशबू लिए फिज़ा में, बहार आई है।<br><br>
-
 सजने लगे हैं रंग में गली-मोहल्ले,<br>
 होली की आज महकती बहार आई है।<br><br>
-
-<b>"होली की ढेरों शुभकामनाएँ!" 🎉💖 </b>`;
+<b>"होली की ढेरों शुभकामनाएँ!" 🎉💖 </b></span>`;
     }
+
+
+    // ✅ Dynamic CSS Injection
+    const style = document.createElement("style");
+    style.textContent = `
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari&display=swap');
+
+        #letterModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            font-family: 'Noto Sans Devanagari', sans-serif;
+        }
+        .whatsapp-link {
+            background: #25d366;
+            color: white;
+            text-decoration: none;
+            padding: 12px 18px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            display: inline-block;
+            width: 100%;
+            max-width: 250px;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-link:hover {
+            background: #1ebe5d;
+            transform: scale(1.05);
+        }
+        #closeModalBtn {
+            color: red;
+            border: none;
+            padding: 1px 1px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 3px;
+            transition: all 0.3s ease;
+        }
+        #closeModalBtn:hover {
+            background: darkred;
+        }
+        .hindi-text {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            font-size: 18px;
+            color: #333;
+        }
+    `;
+    document.head.appendChild(style);
 });
