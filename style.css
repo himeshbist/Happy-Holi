@@ -1,0 +1,255 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Background Video */
+#video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+  background: rgba(0, 0, 0, 0.363);
+}
+
+#video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Ensure video plays on mobile */
+@media (max-width: 768px) {
+  #video-container video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+/* Dim Effect on Video */
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.705);
+}
+
+/* Main Content */
+#content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  z-index: 1;
+  width: 90%;
+  max-width: 600px;
+}
+
+.holi-title {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Open Letter Button Styling */
+#wishButton {
+  background: linear-gradient(135deg, #e57efa, #e9c4fa);
+  padding: 14px 28px;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: all 0.3s ease-in-out;
+  margin: 10px auto;
+  display: block;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  box-shadow: 0px 5px 15px rgba(255, 105, 135, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hover Effect */
+#wishButton:hover {
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  transform: translateY(-3px);
+  box-shadow: 0px 8px 20px rgba(255, 105, 135, 0.5);
+}
+
+/* Button Animation */
+#wishButton::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.6s ease-in-out;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+#wishButton:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 0;
+}
+
+/* Add a subtle pulse effect */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+#wishButton {
+  animation: pulse 2s infinite;
+}
+
+
+/* Modal Styling */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 20px;
+  border-radius: 10px;
+  background: white;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.close {
+  color: red;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+
+.gallery-button {
+  margin-top: 20px;
+  background: rgba(184, 80, 85, 0.8);
+  padding: 12px 24px;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s;
+  display: block;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gallery-button:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+#letterCard {
+  display: inline-block;
+  text-align: center;
+  white-space: normal;
+  font-size: 20px;
+  line-height: 1.5;
+  width: 100%;
+}
+
+#letterCard span {
+  display: inline;
+}
+
+#letterCard {
+  font-family: 'Noto Serif Devanagari', serif;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .holi-title {
+    font-size: 2.5rem;
+  }
+  .subtitle {
+    font-size: 1.2rem;
+  }
+  #wishButton {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+  .modal-content {
+    width: 90%;
+    padding: 15px;
+  }
+  .gallery-button {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .holi-title {
+    font-size: 2rem;
+  }
+  .subtitle {
+    font-size: 1rem;
+  }
+  #wishButton {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+  .modal-content {
+    width: 95%;
+    padding: 10px;
+  }
+  .gallery-button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}
